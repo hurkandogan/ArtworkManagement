@@ -3,16 +3,21 @@ version: "3.8"
 services:
   spring_api:
     image: springci/spring-boot-ci-image
-      container_name: spring_api
-      depends_on:
-        - postgres
-      working_dir:
-      volumes:
-      environment:
-        - SPRING_DATASOURCE_URL=
-        - SPRING_DATASOURCE_USERNAME=postgres
-        - SPRING_DATASOURCE_PASSWORD=admin
-        - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    command: mvn clean spring-boot:run
+    ports:
+      - 80:80
+      - 443:443
+    container_name: spring_api
+    depends_on:
+      - postgres
+    working_dir: /spring_api
+    volumes:
+      - ../java/:/spring_api
+    environment:
+      - SPRING_DATASOURCE_URL=
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
   postgres:
     image: 'postgres:13.1-alpine'
