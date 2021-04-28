@@ -8,8 +8,14 @@ import java.time.LocalDate;
 public class Artwork {
 
     @Id
+    @SequenceGenerator(
+            name="artwork_sequence",
+            sequenceName="artwork_sequence",
+            allocationSize = 1
+    )
     @GeneratedValue(
-            strategy = GenerationType.AUTO
+            strategy = GenerationType.SEQUENCE,
+            generator = "artwork_sequence"
     )
     private Long id;
     private String location;
