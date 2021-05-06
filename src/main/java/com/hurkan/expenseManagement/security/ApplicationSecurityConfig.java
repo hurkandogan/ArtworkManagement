@@ -54,6 +54,5 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(
                 hurkan
         );
-
     }
 }
