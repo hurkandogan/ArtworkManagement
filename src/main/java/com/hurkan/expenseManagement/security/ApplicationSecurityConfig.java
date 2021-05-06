@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import static com.hurkan.expenseManagement.security.UserRoles.*;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +28,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .antMatchers("/api/**").hasRole(SUPERADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -39,7 +42,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails hurkan = User.builder()
                 .username("hurkandogan")
                 .password(passwordEncoder.encode("admin"))
-                .roles("admin")
+                .roles(SUPERADMIN.name())
+                .build();
+
+        UserDetails dogukan = User.builder()
+                .username("dogukan")
+                .password(passwordEncoder.encode("admin"))
+                .roles(ADMIN.name())
                 .build();
 
         return new InMemoryUserDetailsManager(
