@@ -6,6 +6,7 @@ function App() {
       <header className="App-header">
 
       </header>
+        <p>Test React!</p>
     </div>
   );
 }
