@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
 import static com.hurkan.expenseManagement.security.UserRoles.*;
 
 @Configuration
@@ -20,7 +21,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder){
+    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -32,15 +33,15 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login").permitAll();
+                .httpBasic();
     }
 
+    // For Test only. Will be deleted on production!
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
         UserDetails hurkan = User.builder()
-                .username("hurkandogan")
+                .username("hurkan")
                 .password(passwordEncoder.encode("admin"))
                 .roles(SUPERADMIN.name())
                 .build();
@@ -48,11 +49,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails dogukan = User.builder()
                 .username("dogukan")
                 .password(passwordEncoder.encode("admin"))
-                .roles(ADMIN.name())
+                .roles(SUPERADMIN.name())
                 .build();
 
         return new InMemoryUserDetailsManager(
-                hurkan
+                hurkan,
+                dogukan
         );
     }
 }

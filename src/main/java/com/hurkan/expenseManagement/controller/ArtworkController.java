@@ -3,10 +3,7 @@ package com.hurkan.expenseManagement.controller;
 import com.hurkan.expenseManagement.model.Artwork;
 import com.hurkan.expenseManagement.service.ArtworkService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +26,15 @@ public class ArtworkController {
     @PostMapping
     public void saveArtwork(Artwork artwork){
         artworkService.saveArtwork(artwork);
+    }
+
+    @PutMapping
+    public void updateArtwork(Artwork artwork){
+        System.out.println("Update Artwork");
+    }
+
+    @DeleteMapping
+    public void deleteArtwork(Artwork artwork){
+        System.out.println("Update Artwork");
     }
 }
